@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Records</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav style="background-color: #333; padding: 10px;">
+        <a href="index.html">🏠 Inmate Dashboard</a>
+        <a href="medical.html">🩺 Medical Records</a>
+    </nav>
+  
+    <h1>Medical Records Page</h1>
+
+    <h3>Add Medical Record</h3>
+    <form id="addMedicalForm">
+        <input type="number" id="recordNum" placeholder="Record Number" required><br>
+        <input type="text" id="bloodType" placeholder="Blood Type" required><br>
+        <input type="number" id="weight" placeholder="Weight" required><br>
+        <input type="text" id="sex" placeholder="Sex" required><br>
+        <input type="number" id="height" placeholder="Height" required><br>
+        <input type="number" id="inmateId" placeholder="Inmate ID" required><br>
+        <button type="submit">Add Record</button>
+    </form>
+
+    <h3>All Medical Records</h3>
+    <button onclick="loadMedicalRecords()">Refresh</button>
+    <table border="1" id="medicalTable">
+        <thead>
+            <tr>
+                <th>RecordNum</th>
+                <th>BloodType</th>
+                <th>Weight</th>
+                <th>Sex</th>
+                <th>Height</th>
+                <th>InmateID</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h3>Inmates with Medical and Sentence Data</h3>
+    <button onclick="loadJoinedData()">Show Joined Data</button>
+    <div id="joinedResult"></div>
+
+    <script src="medical.js"></script>
+</body>
+</html>

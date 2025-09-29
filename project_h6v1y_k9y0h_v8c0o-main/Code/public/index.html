@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Prison DBMS</title>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="index.html">🏠 Inmate Dashboard</a>
+        <a href="medical.html">🩺 Medical Records</a>
+    </nav>
+  
+    <!-- Display DB status -->
+    <h1>Database Connection Status:
+        <span id="dbStatus">Checking...</span>
+        <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading..." style="display: none;">
+    </h1>
+
+    <br><hr><br>
+
+
+    <!-- Inmate Management Section -->
+    <h2>Inmate Management</h2>
+    <button onclick="initDatabase()">Initialize Database</button>
+    <button onclick="insertData()">Insert Sample Data</button>    
+
+    <br><hr><br>
+
+    <!-- Projection  On Inmates Released in Next 30 Days -->
+    <h2>Upcoming Releases (Next 30 Days)</h2>
+    <button onclick="loadUpcomingReleases()">Refresh</button>
+    <table id="releaseTable" border="1">
+        <thead>
+            <tr>
+                <th>Inmate ID</th>
+                <th>Holding Cell</th>
+                <th>Health Num</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+
+    <!-- Inmate Form -->
+    <h3>Add New Inmate</h3>
+    <form id="inmateForm">
+        <label>Inmate ID:</label>
+        <input type="number" id="inmateId" required><br><br>
+
+        <label>Holding Cell:</label>
+        <select id="holdingCell" required>
+            <option value="REGULAR">REGULAR</option>
+            <option value="SOLITARY">SOLITARY</option>
+            <option value="DEATH ROW">DEATH ROW</option>
+        </select>
+        <br><br>
+
+        <label>Health Number:</label>
+        <input type="number" id="healthNum" required><br><br>
+
+        <label>Start Date:</label>
+        <input type="date" id="startDate" required><br><br>
+
+        <label>End Date:</label>
+        <input type="date" id="endDate" required><br><br>
+
+        <button type="submit">Add Inmate</button>
+    </form>
+
+    <div id="inmateFormMsg"></div>
+
+    <br>
+
+    <!-- Inmate Table -->
+    <h3>Current Inmates</h3>
+    <table id="inmateTable" border="1">
+        <thead>
+            <tr>
+                <th>Inmate ID</th>
+                <th>Holding Cell</th>
+                <th>HealthNum</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <br><hr><br>
+
+
+    <!-- Remove Inmate -->
+    <h3>Remove Inmate</h3>
+    <form id="removeInmateForm">
+        <label for="removeInmateId">Inmate ID:</label>
+        <input type="number" id="removeInmateId" required>
+        <button type="submit">Remove Inmate</button>
+    </form>
+    <div id="removeInmateMsg"></div>
+
+    <br>
+
+    <!-- Update Form -->
+    <h3>Update Inmate Holding Cell</h3>
+    <form id="update-inmate">
+        <label>Inmate ID:</label>
+        <input type="number" id="InmateIDUpdate" required><br><br>
+        <label>Holding Cell</label>
+        <select id="holdingCellUpdate" required>
+            <option value="REGULAR">REGULAR</option>
+            <option value="SOLITARY">SOLITARY</option>
+            <option value="DEATH ROW">DEATH ROW</option>
+        </select>
+        <button type="submit">Update Inmate HoldingCell</button>
+    </form>
+
+    <!--AGGREGATION WITH GROUP BY - Count inmates by cell type-->
+    <h3>Inmate Count by Cell Type</h3>
+    <button id="count-inmate-cell">Show Inmate Count</button>
+
+    <div id="inmateCountResult"></div>
+
+    <canvas id="inmatePieChart" width="200" height="200"></canvas>
+
+    <!--AGGREGATION with HAVING - Find crowded cells-->
+    <h3>Find Crowded Holding Cells</h3>
+    <form id="group-inmate">
+        <label>Minimum Number of Inmates:</label>
+        <input type="number" id="countN" required><br><br>
+        <button id="group-inmate-count">Show Crowded Cells</button>
+    </form>
+
+    <!-- Place to display results -->
+    <div id="crowdedCellsResult"></div>
+
+    <!-- DIVISION -->
+    <h3>Inmates Held in All Cell Types</h3>
+    <button id="get-all-cells-inmates">Find Inmates</button>
+    
+    <!-- Results Display -->
+    <div id="allCellsInmatesResult"></div>
+
+
+    <!-- JavaScript Files -->
+    <script src="scripts.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            checkDatabaseStatus(); 
+            loadInmates();
+            loadUpcomingReleases();
+        });
+    </script>
+
+    <!-- NESTED AGGREGATION - Prisons with Most High-Severity Inmates -->
+<h3>Prisons with Most High-Severity Inmates</h3>
+<button onclick="loadHighSeverityPrisons()">Find Prisons</button>
+
+<div id="highSeverityResult"></div>
+
+</body>
+
+</html>
